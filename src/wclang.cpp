@@ -884,38 +884,6 @@ static void parseargs(int argc, char **argv, const char *target,
                 }
                 break;
             }
-            case 'x':
-            {
-                if (!std::strncmp(arg, "-x", STRLEN("-x")))
-                {
-                    const char *p = arg+STRLEN("-x");
-
-                    if (!*p)
-                    {
-                        p = argv[++i];
-
-                        if (i >= argc)
-                            ERROR("missing argument for '-x'");
-                    }
-
-                    auto checkcxx = [&]()
-                    {
-                        if (!cmdargs.iscxx)
-                        {
-                            cmdargs.iscxx = true;
-                            findcxxheaders(target, cmdargs);
-                        }
-                    };
-
-                    if (!std::strcmp(p, "c")) cmdargs.iscxx = false;
-                    else if (!std::strcmp(p, "c-header")) cmdargs.iscxx = false;
-                    else if (!std::strcmp(p, "c++")) checkcxx();
-                    else if (!std::strcmp(p, "c++-header")) checkcxx();
-                    else ERROR("given language not supported");
-                    continue;
-                }
-                break;
-            }
             case 'O':
             {
                 if (!std::strncmp(arg, "-O", STRLEN("-O")))
